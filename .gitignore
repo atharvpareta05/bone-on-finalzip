@@ -1,0 +1,78 @@
+# ==============================================================================
+# CareLens Git Ignore Policy
+# ==============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Cpython / Python caches
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Credentials, Secrets, and Local Configurations
+.demo_users.json
+.env
+*.env
+.env.*
+secrets.toml
+
+# Clinical Databases & Storage
+*.sqlite3
+*.sqlite3-journal
+*.db
+app_data.sqlite3
+
+# Patient Scans & Clinical Image Uploads
+app_uploads/
+*.png
+*.jpg
+*.jpeg
+*.dcm
+
+# Exception: allow documentation or UI assets if any inside docs/ or assets/
+!docs/**/*.png
+!docs/**/*.jpg
+!assets/**/*.png
+!assets/**/*.jpg
+
+# Heavy Machine Learning Model Weights (>50MB)
+*.pt
+*.pth
+*.onnx
+*.bin
+*.h5
+outputs/**/*.pt
+outputs/**/*.pth
+
+# Datasets (Do not commit patient cohorts or augmented data to git)
+final/final/
+final/final_augmented/
+data/
+datasets/
+
+# IDE & Editor Configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# OS-generated files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Log files
+*.log

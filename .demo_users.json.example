@@ -1,0 +1,26 @@
+[
+  {
+    "username": "patient1",
+    "password": "patient123",
+    "role": "patient",
+    "display_name": "Atharv Patient"
+  },
+  {
+    "username": "patient2",
+    "password": "patient456",
+    "role": "patient",
+    "display_name": "prakhar Patient"
+  },
+  {
+    "username": "doctor1",
+    "password": "doctor123",
+    "role": "doctor",
+    "display_name": "Dr. Swayam's Review"
+  },
+  {
+    "username": "doctor2",
+    "password": "doctor456",
+    "role": "doctor",
+    "display_name": "Dr. Aryan's Review"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "best_validation": 0.9656839928511279,
+  "test": {
+    "loss": 0.13750683646284712,
+    "accuracy": 0.9700093720712277,
+    "balanced_accuracy": 0.9672182254196642,
+    "sensitivity": 0.9544364508393285,
+    "specificity": 0.98
+  }
+}
