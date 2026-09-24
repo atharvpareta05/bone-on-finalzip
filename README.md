@@ -23,8 +23,11 @@ The following files constitute the primary codebase and artifacts:
 - [final/train_resnet50.py](final/train_resnet50.py) — Core ResNet-50 training, validation, early stopping, and metric evaluation script
 - [final/augment_dataset.py](final/augment_dataset.py) — Offline dataset augmentation script applying spatial and photometric transformations
 - [streamlit_app.py](streamlit_app.py) — Interactive `CareLens` clinical prototype with patient registration, scan uploads, Grad-CAM visualization, and physician review workflows
+- [notebooks/](notebooks/) — End-to-end dataset provenance and inspection notebooks (`01_...` through `05_duplicate_analysis.ipynb`)
+- [AUDIT_shortcut_learning.md](AUDIT_shortcut_learning.md) — Shortcut learning and multi-source dataset leakage audit report
+- [PROJECT_SECURITY_AUDIT.md](PROJECT_SECURITY_AUDIT.md) — Comprehensive security audit and remediation roadmap
 - [app_data.sqlite3](app_data.sqlite3) — SQLite database storing user accounts, uploaded case references, diagnostic reviews, and audit trails
-- [requirements.txt](requirements.txt) — Project dependencies (PyTorch with CUDA 12.8, Streamlit, Pandas, Pillow, Matplotlib)
+- [requirements.txt](requirements.txt) — Project dependencies (PyTorch with CUDA 12.8, Streamlit, Pandas, Pillow, Matplotlib, bcrypt)
 - [conversation_log.md](conversation_log.md) — Chronological engineering log documenting every phase of development
 - [outputs/resnet50/](outputs/resnet50/) — Baseline model checkpoint (`best_resnet50.pt`), metrics JSON, and test predictions CSV
 - [outputs/resnet50_augmented/](outputs/resnet50_augmented/) — Final augmented model checkpoint (`best_resnet50.pt`), metrics JSON, and test predictions CSV
@@ -33,16 +36,16 @@ The following files constitute the primary codebase and artifacts:
 
 ## 3. Dataset Preparation
 
-The original bone radiograph corpus was loaded from the `final/final` directory. Because medical imaging datasets frequently exhibit class imbalance, the training split was inspected to determine exact class frequencies:
+The original bone radiograph corpus was loaded from the `final/final` directory, integrated from two distinct radiograph collections (BTXRD and Dataset 2). Because medical imaging datasets frequently exhibit class imbalance, the splits were inspected to determine exact class frequencies:
 
 ### Dataset Splits and Distribution
 
 | Split | Images | Benign / Non-Cancer (Class 0) | Malignant / Cancer (Class 1) | Class Ratio |
 |---|---:|---:|---:|:---:|
 | `train` | 10,052 | 6,697 | 3,355 | ~ 2.0 : 1 |
-| `valid` | 1,084 | 714 | 370 | ~ 1.9 : 1 |
-| `test` | 1,067 | 700 | 367 | ~ 1.9 : 1 |
-| **Total** | **12,203** | **8,111** | **4,092** | **1.98 : 1** |
+| `valid` | 1,084 | 653 | 431 | ~ 1.5 : 1 |
+| `test` | 1,067 | 650 | 417 | ~ 1.6 : 1 |
+| **Total** | **12,203** | **8,000** | **4,203** | **1.90 : 1** |
 
 To prevent the model from biasing toward the majority benign class, training utilized **class-weighted cross-entropy loss**:
 $$w_c = \frac{N}{2 \cdot N_c} \implies w_0 \approx 0.75, \quad w_1 \approx 1.50$$

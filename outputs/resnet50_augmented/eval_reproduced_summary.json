@@ -1,0 +1,106 @@
+{
+  "test": {
+    "overall": {
+      "count": 1067,
+      "accuracy": 0.971883786316776,
+      "balanced_accuracy": 0.9696163069544365,
+      "sensitivity": 0.9592326139088729,
+      "specificity": 0.98,
+      "loss": 0.10042035666698304
+    },
+    "subgroups": {
+      "BTXRD": {
+        "count": 372,
+        "accuracy": 0.946236559139785,
+        "balanced_accuracy": 0.8116950922380787,
+        "sensitivity": 0.6470588235294118,
+        "specificity": 0.9763313609467456
+      },
+      "Dataset2": {
+        "count": 695,
+        "accuracy": 0.9856115107913669,
+        "balanced_accuracy": 0.9854597643435763,
+        "sensitivity": 0.9869451697127938,
+        "specificity": 0.9839743589743589
+      }
+    }
+  },
+  "valid": {
+    "overall": {
+      "count": 1084,
+      "accuracy": 0.9723247232472325,
+      "balanced_accuracy": 0.9711131561275285,
+      "sensitivity": 0.9651972157772621,
+      "specificity": 0.9770290964777948,
+      "loss": 0.1182944112712074
+    },
+    "subgroups": {
+      "BTXRD": {
+        "count": 371,
+        "accuracy": 0.9433962264150944,
+        "balanced_accuracy": 0.8366207016931402,
+        "sensitivity": 0.7058823529411765,
+        "specificity": 0.9673590504451038
+      },
+      "Dataset2": {
+        "count": 713,
+        "accuracy": 0.9873772791023843,
+        "balanced_accuracy": 0.9873736568568059,
+        "sensitivity": 0.9874055415617129,
+        "specificity": 0.9873417721518988
+      }
+    }
+  },
+  "train_augmented": {
+    "overall": {
+      "count": 20104,
+      "accuracy": 0.9986072423398329,
+      "balanced_accuracy": 0.9987688283585394,
+      "sensitivity": 0.9992548435171386,
+      "specificity": 0.9982828131999403,
+      "loss": 0.005102938237797831
+    },
+    "subgroups": {
+      "BTXRD": {
+        "count": 5992,
+        "accuracy": 0.9981642189586115,
+        "balanced_accuracy": 0.9989897134459955,
+        "sensitivity": 1.0,
+        "specificity": 0.9979794268919912
+      },
+      "Dataset2": {
+        "count": 14112,
+        "accuracy": 0.998795351473923,
+        "balanced_accuracy": 0.998839570587839,
+        "sensitivity": 0.9991885751379422,
+        "specificity": 0.9984905660377359
+      }
+    }
+  },
+  "train_original": {
+    "overall": {
+      "count": 10052,
+      "accuracy": 0.9990051730998806,
+      "balanced_accuracy": 0.9991046550416173,
+      "sensitivity": 0.9994038748137108,
+      "specificity": 0.9988054352695237,
+      "loss": 0.004440638178826745
+    },
+    "subgroups": {
+      "BTXRD": {
+        "count": 2996,
+        "accuracy": 0.9986648865153538,
+        "balanced_accuracy": 0.9992652461425422,
+        "sensitivity": 1.0,
+        "specificity": 0.9985304922850845
+      },
+      "Dataset2": {
+        "count": 7056,
+        "accuracy": 0.9991496598639455,
+        "balanced_accuracy": 0.9991722854010888,
+        "sensitivity": 0.9993508601103538,
+        "specificity": 0.9989937106918239
+      }
+    }
+  }
+}
