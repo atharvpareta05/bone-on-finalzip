@@ -333,15 +333,68 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 2. Launching the CareLens Web Portal
+### 2. Launching CareLens 2.0 (FastAPI Backend + Next.js Frontend)
 
+CareLens has been fully extracted into a decoupled client/server web application:
+
+#### A. Launch the FastAPI Backend
 ```powershell
-# Direct launch using the virtual environment
+# From project root:
+.\.venv\Scripts\python.exe backend/run.py
+```
+- Backend runs on **[http://localhost:8000](http://localhost:8000)**
+- Interactive Swagger OpenAPI Docs: **[http://localhost:8000/docs](http://localhost:8000/docs)**
+- Health & Model Probe: **[http://localhost:8000/health](http://localhost:8000/health)**
+
+#### B. Launch the Next.js Frontend
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+- Frontend runs on **[http://localhost:3000](http://localhost:3000)**
+
+#### C. Running via Docker Compose
+```powershell
+docker compose up --build
+```
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:8000` (auto-monitored by Docker healthcheck)
+
+#### D. Running Test Suites
+```powershell
+# 1. Run Backend Pytest Suite (4 comprehensive integration tests)
+.\.venv\Scripts\pytest backend/tests/test_api.py -v
+
+# 2. Run Frontend Unit & Boundary Tests (19 tests)
+cd frontend
+npm run test
+
+# 3. Verify TypeScript Compilation (zero drift against API)
+npm run typecheck
+
+# 4. Verify Next.js Production Build
+npm run build
+```
+
+#### E. Demo Credentials
+| Role | Username | Password |
+|---|---|---|
+| **Clinician / Radiologist** | `doctor1` | `CareLens2026!Doctor` |
+| **Patient** | `patient1` | `CareLens2026!Patient` |
+
+---
+
+### 3. Legacy Prototype (Streamlit Monolith)
+For backward compatibility or offline single-script demonstration:
+```powershell
 .\.venv\Scripts\streamlit.exe run streamlit_app.py
 ```
-Open **[http://localhost:8501](http://localhost:8501)** in your web browser.
+Open **[http://localhost:8501](http://localhost:8501)** in your browser.
 
-### 3. Re-running Dataset Augmentation (Optional)
+---
+
+### 4. Re-running Dataset Augmentation (Optional)
 
 ```powershell
 .\.venv\Scripts\python.exe final/augment_dataset.py `
@@ -350,7 +403,7 @@ Open **[http://localhost:8501](http://localhost:8501)** in your web browser.
   --copies 1
 ```
 
-### 4. Re-running Model Training (Optional)
+### 5. Re-running Model Training (Optional)
 
 ```powershell
 .\.venv\Scripts\python.exe final/train_resnet50.py `
