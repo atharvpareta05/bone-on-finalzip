@@ -316,7 +316,7 @@ def pending_cases():
         return connection.execute(
             """SELECT cases.*, users.display_name AS patient_name
             FROM cases JOIN users ON users.id = cases.patient_id
-            WHERE cases.status = 'Pending doctor review' ORDER BY cases.created_at"""
+            WHERE cases.status IN ('Pending doctor review', 'AI-analyzed') ORDER BY cases.created_at"""
         ).fetchall()
 
 
