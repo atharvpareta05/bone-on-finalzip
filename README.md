@@ -335,24 +335,38 @@ pip install -r requirements.txt
 
 ### 2. Launching CareLens 2.0 (FastAPI Backend + Next.js Frontend)
 
-CareLens has been fully extracted into a decoupled client/server web application:
+CareLens 2.0 is a decoupled client/server web application with a FastAPI backend and a Next.js 14 frontend.
 
-#### A. Launch the FastAPI Backend
+#### Option 1: Unified Single-Command Runner (Recommended)
+You can launch both the backend (port 8000) and frontend (port 3000) simultaneously with one command. The runner automatically auto-detects the virtual environment, cleans up any orphaned ports, validates service health, and opens your default browser:
+
+```powershell
+# From the project root:
+python run_carelens.py
+```
+
+*Or on Windows, simply double-click **`start_carelens.bat`**.*
+
+---
+
+#### Option 2: Manual Two-Terminal Launch
+
+**Terminal 1 — FastAPI Backend:**
 ```powershell
 # From project root:
 .\.venv\Scripts\python.exe backend/run.py
 ```
-- Backend runs on **[http://localhost:8000](http://localhost:8000)**
+- Backend API: **[http://localhost:8000](http://localhost:8000)**
 - Interactive Swagger OpenAPI Docs: **[http://localhost:8000/docs](http://localhost:8000/docs)**
 - Health & Model Probe: **[http://localhost:8000/health](http://localhost:8000/health)**
 
-#### B. Launch the Next.js Frontend
+**Terminal 2 — Next.js Frontend:**
 ```powershell
 cd frontend
 npm install
 npm run dev
 ```
-- Frontend runs on **[http://localhost:3000](http://localhost:3000)**
+- Frontend UI: **[http://localhost:3000](http://localhost:3000)**
 
 #### C. Running via Docker Compose
 ```powershell

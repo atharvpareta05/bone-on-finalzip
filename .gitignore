@@ -33,6 +33,9 @@ venv.bak/
 *.env
 .env.*
 secrets.toml
+!.env.example
+!*.env.example
+!**/.env.example
 
 # Clinical Databases & Storage
 *.sqlite3
