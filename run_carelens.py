@@ -34,6 +34,15 @@ def kill_process_on_port(port: int):
             pass
 
 
+def wait_for_port(port: int, timeout: int = 60) -> bool:
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        if is_port_in_use(port):
+            return True
+        time.sleep(0.5)
+    return False
+
+
 def wait_for_url(url: str, timeout: int = 30) -> bool:
     start_time = time.time()
     while time.time() - start_time < timeout:
@@ -68,7 +77,7 @@ def main():
     )
 
     print("      Waiting for model and API to load...", end="", flush=True)
-    if not wait_for_url("http://localhost:8000/health", timeout=30):
+    if not wait_for_port(8000, timeout=30):
         print(" [FAILED]")
         print("ERROR: FastAPI backend failed to start on http://localhost:8000.")
         backend_proc.kill()
@@ -84,7 +93,7 @@ def main():
     )
 
     print("      Waiting for web portal...", end="", flush=True)
-    if not wait_for_url("http://localhost:3000", timeout=45):
+    if not wait_for_port(3000, timeout=60):
         print(" [FAILED]")
         print("ERROR: Next.js frontend failed to start on http://localhost:3000.")
         backend_proc.kill()
@@ -105,7 +114,8 @@ def main():
     print("=" * 60)
     print("Press CTRL+C anytime in this terminal to stop both servers.\n")
 
-    # Open browser automatically
+    # Open browser automatically after a brief 2-second grace period
+    time.sleep(2)
     try:
         webbrowser.open("http://localhost:3000")
     except Exception:
