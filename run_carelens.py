@@ -10,7 +10,21 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
-PYTHON_EXE = sys.executable
+VENV_PYTHON = (
+    PROJECT_ROOT / ".venv" / "Scripts" / "python.exe"
+    if os.name == "nt"
+    else PROJECT_ROOT / ".venv" / "bin" / "python"
+)
+
+# If invoked via system Python without activating venv, automatically re-exec using .venv python!
+if VENV_PYTHON.exists():
+    try:
+        if Path(sys.executable).resolve() != VENV_PYTHON.resolve():
+            sys.exit(subprocess.call([str(VENV_PYTHON)] + sys.argv))
+    except Exception:
+        pass
+
+PYTHON_EXE = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
 
 # Find npm executable (on Windows it's usually npm.cmd)
 NPM_CMD = "npm.cmd" if os.name == "nt" else "npm"
@@ -66,7 +80,7 @@ def main():
     kill_process_on_port(3000)
 
     # 2. Start FastAPI Backend
-    print("[2/4] Starting FastAPI Backend on http://localhost:8000 ...")
+    print(f"[2/4] Starting FastAPI Backend on http://localhost:8000 (using {Path(PYTHON_EXE).name}) ...")
     backend_env = os.environ.copy()
     backend_env["PYTHONUNBUFFERED"] = "1"
 
