@@ -1,4 +1,64 @@
-# Bone Cancer Detection Model Training & Deployment Report
+# CareLens: AI-Assisted Bone Tumor Screening & Clinical Decision Support
+
+[![CareLens 2.0](https://img.shields.io/badge/CareLens%202.0-Enterprise%20Full--Stack-success.svg)](CARELENS_V2_FULLSTACK.md)
+[![CareLens 1.0](https://img.shields.io/badge/CareLens%201.0-Streamlit%20Prototype-orange.svg)](CARELENS_V1_STREAMLIT.md)
+[![Model](https://img.shields.io/badge/Model-ResNet--50%20(97.19%25%20Acc)-blue.svg)](#4-model-training-setup)
+[![XAI](https://img.shields.io/badge/XAI-Layer4%20Grad--CAM-purple.svg)](#7-grad-cam-interpretability-and-visual-explanation)
+[![CI](https://github.com/atharvpareta05/bone-on-finalzip/actions/workflows/ci.yml/badge.svg)](https://github.com/atharvpareta05/bone-on-finalzip/actions/workflows/ci.yml)
+
+> **Important Clinical Notice**: CareLens is an investigative decision-support platform designed to assist certified oncologists and radiologists. It does not provide automated diagnoses nor replace tissue biopsy, CT/MRI cross-sectional imaging, or licensed medical evaluation.
+
+---
+
+## 🌟 Dual-Version Showcase: CareLens 1.0 vs. CareLens 2.0
+
+This repository contains **two complete, functional implementations** reflecting the engineering evolution from a rapid clinical prototype to a production-grade decoupled enterprise web platform:
+
+| Version | Focus | Frontend | Backend / API | Key Highlights | Documentation & Code |
+|---|---|---|---|---|---|
+| **CareLens 1.0** *(Classic)* | Rapid Clinical Validation | Reactive Python UI (Streamlit) | Monolithic Python Process | Instant setup, inline Grad-CAM review, SQLite auth, single-script execution | 📖 [CareLens 1.0 Guide](CARELENS_V1_STREAMLIT.md)<br>📁 [`carelens-v1-streamlit/`](carelens-v1-streamlit/) |
+| **CareLens 2.0** *(NextGen)* | Decoupled Enterprise Platform | Next.js 14 App Router (React 18 + TS + Tailwind) | FastAPI (Uvicorn ASGI + OpenAPI 3.1) | Canvas zoom/pan radiograph viewer, priority triage queue, JWT rotation, ReportLab PDF reports, Docker | 📖 [CareLens 2.0 Guide](CARELENS_V2_FULLSTACK.md)<br>📁 [`backend/`](backend/) & [`frontend/`](frontend/) |
+
+### 🚀 Instant Launch Guide
+
+```text
+               +-------------------------------------------------------------+
+               |               Which version would you like to run?          |
+               +------------------------------+------------------------------+
+                                              |
+                     +------------------------+------------------------+
+                     |                                                 |
+                     v                                                 v
+      [ CareLens 2.0 (Modern Web App) ]                 [ CareLens 1.0 (Streamlit Monolith) ]
+      - Port 3000 (UI) & Port 8000 (API)                - Port 8501 (Interactive Prototype)
+      - Run: python run_carelens.py                     - Run: streamlit run streamlit_app.py
+      - Or click: start_carelens.bat                    - Or click: start_streamlit.bat
+```
+
+#### Launching CareLens 2.0 (Full-Stack Next.js + FastAPI)
+```powershell
+# One-command unified launcher (auto-detects virtualenv, cleans ports & opens browser):
+python run_carelens.py
+# Or on Windows: double-click start_carelens.bat
+```
+- Web Application: **[http://localhost:3000](http://localhost:3000)**
+- Interactive API Docs: **[http://localhost:8000/docs](http://localhost:8000/docs)**
+
+#### Launching CareLens 1.0 (Streamlit Monolithic Prototype)
+```powershell
+# From project root:
+.\.venv\Scripts\streamlit.exe run carelens-v1-streamlit/streamlit_app.py
+# Or on Windows: double-click start_streamlit.bat
+```
+- Clinical Prototype: **[http://localhost:8501](http://localhost:8501)**
+
+#### 🔑 Shared Demo Credentials
+| Role | Username | Password | Access Privileges |
+|---|---|---|---|
+| **Clinician / Radiologist** | `doctor1` | `CareLens2026!Doctor` | Prioritized triage queue, interactive review workspace, diagnostic sign-off |
+| **Patient** | `patient1` | `CareLens2026!Patient` | Scan upload with boundary checks, real-time risk classification, case history |
+
+---
 
 ## 1. Objective
 
@@ -18,19 +78,32 @@ The workflow followed in this project includes:
 
 ## 2. Project Files
 
-The following files constitute the primary codebase and artifacts:
+The following directories and files constitute the primary codebase:
 
-- [final/train_resnet50.py](final/train_resnet50.py) — Core ResNet-50 training, validation, early stopping, and metric evaluation script
-- [final/augment_dataset.py](final/augment_dataset.py) — Offline dataset augmentation script applying spatial and photometric transformations
-- [streamlit_app.py](streamlit_app.py) — Interactive `CareLens` clinical prototype with patient registration, scan uploads, Grad-CAM visualization, and physician review workflows
-- [notebooks/](notebooks/) — End-to-end dataset provenance and inspection notebooks (`01_...` through `05_duplicate_analysis.ipynb`)
+### Presentation & Architecture Guides
+- [CARELENS_V1_STREAMLIT.md](CARELENS_V1_STREAMLIT.md) — Comprehensive architecture and clinical workflow guide for CareLens 1.0
+- [CARELENS_V2_FULLSTACK.md](CARELENS_V2_FULLSTACK.md) — Comprehensive architecture and enterprise full-stack guide for CareLens 2.0
 - [AUDIT_shortcut_learning.md](AUDIT_shortcut_learning.md) — Shortcut learning and multi-source dataset leakage audit report
-- [PROJECT_SECURITY_AUDIT.md](PROJECT_SECURITY_AUDIT.md) — Comprehensive security audit and remediation roadmap
-- [app_data.sqlite3](app_data.sqlite3) — SQLite database storing user accounts, uploaded case references, diagnostic reviews, and audit trails
-- [requirements.txt](requirements.txt) — Project dependencies (PyTorch with CUDA 12.8, Streamlit, Pandas, Pillow, Matplotlib, bcrypt)
-- [conversation_log.md](conversation_log.md) — Chronological engineering log documenting every phase of development
-- [outputs/resnet50/](outputs/resnet50/) — Baseline model checkpoint (`best_resnet50.pt`), metrics JSON, and test predictions CSV
+- [PROJECT_SECURITY_AUDIT.md](PROJECT_SECURITY_AUDIT.md) — Comprehensive clinical security audit and remediation roadmap
+
+### CareLens 2.0 (Modern Enterprise Platform)
+- [backend/](backend/) — FastAPI REST application with JWT rotation, Grad-CAM hooks, ReportLab PDF generation, and OpenAPI 3.1
+- [frontend/](frontend/) — Next.js 14 App Router React client with interactive canvas radiograph viewer and triage queue
+- [run_carelens.py](run_carelens.py) — Unified single-command runner for both backend and frontend daemons
+- [start_carelens.bat](start_carelens.bat) — One-click Windows desktop launcher for CareLens 2.0
+- [docker-compose.yml](docker-compose.yml) — Production container orchestration
+
+### CareLens 1.0 (Streamlit Monolithic Prototype)
+- [carelens-v1-streamlit/](carelens-v1-streamlit/) — Dedicated folder containing the self-contained Streamlit prototype and launcher
+- [streamlit_app.py](streamlit_app.py) — Interactive Python monolith with Grad-CAM visualization and doctor review tabs
+- [start_streamlit.bat](start_streamlit.bat) — One-click Windows desktop launcher for CareLens 1.0
+
+### Machine Learning Core & Provenance
+- [final/train_resnet50.py](final/train_resnet50.py) — ResNet-50 training, validation, early stopping, and metric evaluation script
+- [final/augment_dataset.py](final/augment_dataset.py) — Offline dataset augmentation script applying spatial and photometric transformations
+- [notebooks/](notebooks/) — End-to-end dataset provenance and inspection notebooks (`01_...` through `05_duplicate_analysis.ipynb`)
 - [outputs/resnet50_augmented/](outputs/resnet50_augmented/) — Final augmented model checkpoint (`best_resnet50.pt`), metrics JSON, and test predictions CSV
+- [requirements.txt](requirements.txt) — Python dependencies (PyTorch CUDA 12.8, FastAPI, Streamlit, Pandas, Pillow, bcrypt, ReportLab)
 
 ---
 
