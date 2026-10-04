@@ -1,3 +1,4 @@
+import os
 import sys
 import uvicorn
 from pathlib import Path
@@ -9,10 +10,12 @@ if str(PROJECT_ROOT) not in sys.path:
 BACKEND_DIR = PROJECT_ROOT / "backend"
 
 if __name__ == "__main__":
+    # In production or runner mode, reload is False for rock-solid stability on Windows
+    reload_flag = os.getenv("UVICORN_RELOAD", "false").lower() in ("true", "1")
     uvicorn.run(
         "backend.app.main:app",
         host="0.0.0.0",
         port=8000,
-        reload=True,
-        reload_dirs=[str(BACKEND_DIR)],
+        reload=reload_flag,
+        reload_dirs=[str(BACKEND_DIR)] if reload_flag else None,
     )

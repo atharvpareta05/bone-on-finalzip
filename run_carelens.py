@@ -88,6 +88,7 @@ def main():
         [PYTHON_EXE, str(PROJECT_ROOT / "backend" / "run.py")],
         cwd=str(PROJECT_ROOT),
         env=backend_env,
+        stdin=subprocess.DEVNULL,
     )
 
     print("      Waiting for model and API to load...", end="", flush=True)
@@ -104,6 +105,7 @@ def main():
         [NPM_CMD, "run", "dev"],
         cwd=str(FRONTEND_DIR),
         env=os.environ.copy(),
+        stdin=subprocess.DEVNULL,
     )
 
     print("      Waiting for web portal...", end="", flush=True)
